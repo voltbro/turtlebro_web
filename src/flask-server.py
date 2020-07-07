@@ -10,6 +10,9 @@ host = rospy.get_param('~host', '0.0.0.0')
 www_path = rospy.get_param('~path','../web')
 
 app = Flask(__name__, static_folder=www_path + '/static', template_folder=www_path)
+app.debug = True
+app.jinja_env.auto_reload = True
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 def set_exit_handler(func):
     signal.signal(signal.SIGTERM, func)
