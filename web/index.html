@@ -1,66 +1,124 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.0.1">
+    <title>Sticky Footer Navbar Template · Bootstrap</title>
 
-<link rel="stylesheet" type="text/css"
-  href="static/css/jquery-ui.css" />
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sticky-footer-navbar/">
 
-<script src="static/js/jquery.min.js"></script>
-<script src="static/js/jquery-ui.min.js"></script>
-<script src="static/js/eventemitter2.min.js"></script>
-<script src="static/js/roslib.min.js"></script>
-<script src="static/js/keyboardteleop.js"></script>
+    <!-- Bootstrap core CSS -->
+<link href="./static/css/bootstrap/bootstrap.css" rel="stylesheet">
+<link href="./static/css/bootstrap/bootstrap-slider.min.css" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="./static/css/sticky-footer-navbar.css" rel="stylesheet">
+  </head>
+  <body class="d-flex flex-column h-100">
+    <header>
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#">TurleBro</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Control <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Learn</a>
+          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Docs</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Book</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<!-- Begin page content -->
+<main role="main" class="flex-shrink-0">
+  <div class="container">
+    <h1 class="mt-5">Sticky footer with fixed navbar</h1>
+    <p class="lead">Pin a footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>main &gt; .container</code>.</p>
+    <p>Back to <a href="../examples/sticky-footer/">the default sticky footer</a> minus the navbar.</p>
+  </div>
+  <div class="container">
+    <input
+    id="speed_slider"
+	type="text"
+	data-provide="slider"
+	data-slider-min="10"
+	data-slider-max="100"
+	data-slider-step="10"
+	data-slider-value="100"
+>
+
+  </div>
+  <div class="container">
+        <img src="http://192.168.0.192:9999/?action=stream" />
+  </div>
+</main>
+
+<footer class="footer mt-auto py-3">
+  <div class="container">
+    <span class="text-muted">Place sticky footer content here.</span>
+  </div>
+</footer>
+<script src="./static/js/jquery-3.5.1.min.js" ></script>
+<script src="./static/js/bootstrap/bootstrap.bundle.js"></script>
+<script src="./static/js/bootstrap/bootstrap-slider.min.js"></script>
+<script src="./static/js/eventemitter2.min.js"></script>
+<script src="./static/js/roslib.min.js"></script>
+<script src="./static/js/keyboardteleop.js"></script>
 
 <script>
-  /**
-   * Setup all GUI elements when the page is loaded. 
-   */
-   $(document).ready(function(){
-
+$(document).ready(function(){
 
     // Connecting to ROS.
     var ros = new ROSLIB.Ros({
-      url : 'ws://192.168.0.192:9090'
+    url : 'ws://192.168.0.192:9090'
     });
 
     // Initialize the teleop.
     var teleop = new KEYBOARDTELEOP.Teleop({
-      ros : ros,
-      topic : '/cmd_vel'
+    ros : ros,
+    topic : '/cmd_vel',
     });
 
-    // Create a UI slider using JQuery UI.
-    $('#speed-slider').slider({
-      range : 'min',
-      min : 0,
-      max : 100,
-      value : 90,
-      slide : function(event, ui) {
-        // Change the speed label.
-        $('#speed-label').html('Speed: ' + ui.value + '%');
-        // Scale the speed.
-        teleop.scale = (ui.value / 100.0);
-      }
+    $('#speed_slider').slider({
+        formatter: function(value) {
+            return 'Speed ' + value + '%';
+        },    
+    }).on('slide', function(slider){
+        teleop.scale = (slider.value / 100.0)
     });
 
-    // Set the initial speed .
-    $('#speed-label').html('Speed: ' + ($('#speed-slider').slider('value')) + '%');
-    teleop.scale = ($('#speed-slider').slider('value') / 100.0);
+
 });
 </script>
-</head>
-
-<body>
-  <h1>TurtleBro Web Control</h1>
-  <div id="speed-label"></div>
-  <div id="speed-slider"></div>
-
-  <div class="clear"></div>
-  <div style="padding-top: 20px;">
-    <div>
-        <img src="http://192.168.0.192:9999/?action=stream" />
-    </div>
-  </div>
-</body>
 </html>
