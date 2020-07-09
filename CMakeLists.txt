@@ -8,7 +8,7 @@ project(turtlebro_web)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  rosbridge_suite
+  rosbridge_server
   rospy
 )
 
@@ -104,7 +104,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES turtlebro_web
-#  CATKIN_DEPENDS rosbridge_suite rospy
+#  CATKIN_DEPENDS rosbridge_server rospy
 #  DEPENDS system_lib
 )
 
