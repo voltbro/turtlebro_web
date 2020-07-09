@@ -11,7 +11,7 @@ rospy.init_node('webserver', anonymous=True)
 port = rospy.get_param('~port', 8080)
 host = rospy.get_param('~host', '0.0.0.0')
 www_path = rospy.get_param('~path','../web')
-debug = rospy.get_param('~debug', False)
+debug = rospy.get_param('~debug', True)
 
 app = Flask(__name__, static_folder=www_path + '/static', template_folder=www_path)
 
@@ -32,7 +32,10 @@ def on_exit(sig, func=None):
 def serve_index():
     # host_params = request.host.split(":")
     ros_host_params = urlparse(get_master_uri())
-    return render_template('index.html', ros_host=ros_host_params.hostname)
+    return render_template('index.html', 
+            ros_host = ros_host_params.hostname,
+            ros_robot = os.uname()[1]
+            )
 
 set_exit_handler(on_exit)
 rospy.loginfo('Start WebServer on {}:{}'.format(host, port))
