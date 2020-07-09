@@ -11,7 +11,7 @@ rospy.init_node('webserver', anonymous=True)
 port = rospy.get_param('~port', 8080)
 host = rospy.get_param('~host', '0.0.0.0')
 www_path = rospy.get_param('~path','../web')
-debug = rospy.get_param('~debug', True)
+debug = rospy.get_param('~debug', False)
 
 app = Flask(__name__, static_folder=www_path + '/static', template_folder=www_path)
 
