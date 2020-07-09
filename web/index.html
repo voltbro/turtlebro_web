@@ -53,9 +53,8 @@
 	data-slider-value="100"
 ></p>
 
-  </div>
-  <div class="container">
-        <img src="http://192.168.0.192:9999/?action=stream" />
+    <h3>Видео 1</h3>
+        <img src="http://{{ros_host}}:9999/?action=stream" />
   </div>
 </main>
 
@@ -76,13 +75,13 @@ $(document).ready(function(){
 
     // Connecting to ROS.
     var ros = new ROSLIB.Ros({
-    url : 'ws://192.168.0.192:9090'
+        url : 'ws://{{ros_host}}:9090'
     });
 
     // Initialize the teleop.
     var teleop = new KEYBOARDTELEOP.Teleop({
-    ros : ros,
-    topic : '/cmd_vel',
+        ros : ros,
+        topic : '/cmd_vel',
     });
 
     $('#speed_slider').slider({

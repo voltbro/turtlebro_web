@@ -1,0 +1,14 @@
+<launch>
+  <arg name="path" default="$(find turtlebro_web)/web"/>
+  <arg name="port" default="80"/>
+  <arg name="host" default="0.0.0.0"/>
+  <arg name="debug" type="bool" default="false"/>
+
+
+  <node name="webserver" pkg="turtlebro_web" type="flask-server.py" output="log" respawn="true">
+      <param name="path" value="$(arg path)"/>
+      <param name="port" value="$(arg port)"/>
+      <param name="host" value="$(arg host)"/>
+      <param name="debug" value="$(arg debug)"/>
+  </node>
+</launch>
