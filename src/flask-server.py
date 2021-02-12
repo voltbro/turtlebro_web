@@ -31,9 +31,11 @@ def on_exit(sig, func=None):
 @app.route('/')
 def serve_index():
     # host_params = request.host.split(":")
-    ros_host_params = urlparse(get_master_uri())
+    # ros_host_params = urlparse(get_master_uri())
+    ip_address = request.host.split(':')[0]
     return render_template('index.html', 
-            ros_host = ros_host_params.hostname,
+            # ros_host = ros_host_params.hostname,
+            ros_host = ip_address,
             ros_robot = os.uname()[1]
             )
 
