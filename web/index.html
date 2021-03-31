@@ -111,7 +111,7 @@ $(document).ready(function(){
     });
 
     tele_listener.subscribe(function(message) {
-      console.log('Received message on ' + tele_listener.name + ': ' + message.odom_x);
+      // console.log('Received message on ' + tele_listener.name + ': ' + message.odom_x);
       $('#speed_x').text(message.odom_x.toFixed(2));
       $('#speed_y').text(message.odom_y.toFixed(2));
   });
