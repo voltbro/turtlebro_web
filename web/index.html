@@ -61,8 +61,10 @@
       </div>
       <div class="col-3">
         <h3>Параметры</h3>
-          <div>Координата X: <span id="speed_x">###</span>м</div> 
-          <div>Координата Y: <span id="speed_y">###</span>м</div> 
+          <div>Координата X: <span id="speed_x">#</span> м</div> 
+          <div>Координата Y: <span id="speed_y">#</span> м</div> 
+          <div>Угол поворота: <span id="imu_yaw">#</span> град</div> 
+          <div>Напряжение питания: <span id="bat_voltage">#</span> В.</div> 
       </div>    
     </div>
    
@@ -114,6 +116,10 @@ $(document).ready(function(){
       // console.log('Received message on ' + tele_listener.name + ': ' + message.odom_x);
       $('#speed_x').text(message.odom_x.toFixed(2));
       $('#speed_y').text(message.odom_y.toFixed(2));
+      $('#imu_yaw').text(message.imu_yaw);
+      $('#bat_voltage').text(message.bat_voltage.toFixed(2));
+
+
   });
 
 
