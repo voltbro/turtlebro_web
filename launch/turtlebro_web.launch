@@ -6,5 +6,6 @@
     <include file="$(find turtlebro)/launch/camera_stream.launch" if="$(arg run_video_stream)"/>
     
     <include file="$(find turtlebro_web)/launch/webserver.launch"/>
+    <include file="$(find turtlebro_web)/launch/telemetry.launch"/>
 
 </launch>

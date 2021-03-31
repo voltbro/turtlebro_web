@@ -199,6 +199,7 @@ install(DIRECTORY
 
 install(PROGRAMS
   src/flask-server.py
+  src/telemetry.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

@@ -1,0 +1,6 @@
+<launch>
+  <arg name="rate" default="2"/>
+  <node name="web_telemetry_node" pkg="turtlebro_web" type="telemetry.py" output="log" respawn="true">
+      <param name="rate" value="$(arg rate)"/>
+  </node>
+</launch>

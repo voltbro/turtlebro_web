@@ -38,7 +38,7 @@ class Telemetry(object):
 
     def pub_telemetry(self):
 
-        rate = rospy.Rate(2)
+        rate = rospy.Rate(rospy.get_param('~rate', 2))
         tele_pub = rospy.Publisher('/web_tele', WebTelemetry, queue_size=1)
 
         while not rospy.is_shutdown():
