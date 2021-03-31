@@ -89,8 +89,10 @@ $(document).ready(function(){
         formatter: function(value) {
             return 'Скорость: ' + value + '%';
         },    
-    }).on('slide', function(slider){
-        teleop.scale = (slider.value / 100.0)
+    }).on('change', function(slider){
+        // teleop.scale = (slider.value / 100.0)
+        teleop.scale = (slider.value.newValue / 100.0)
+        console.log(teleop.scale)
     });
 
 
