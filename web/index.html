@@ -54,9 +54,19 @@
 	data-slider-value="100"
 ></p>
 
-    <h3>Видео 1</h3>
-        <img src="http://{{ros_host}}:9999/?action=stream" width="640" height="480"/>
-  </div>
+    <div class="row">
+      <div class="col-8">
+        <h3>Видео</h3>
+            <img src="http://{{ros_host}}:9999/?action=stream" width="640" height="480"/>
+      </div>
+      <div class="col-3">
+        <h3>Параметры</h3>
+          <div>Координата X: <span id="speed_x">###</span>м</div> 
+          <div>Координата Y: <span id="speed_y">###</span>м</div> 
+      </div>    
+    </div>
+   
+    </div>
 </main>
 
 <footer class="footer mt-auto py-3">
@@ -92,8 +102,19 @@ $(document).ready(function(){
     }).on('change', function(slider){
         // teleop.scale = (slider.value / 100.0)
         teleop.scale = (slider.value.newValue / 100.0)
-        console.log(teleop.scale)
     });
+
+    var tele_listener = new ROSLIB.Topic({
+      ros : ros,
+      name : '/web_tele',
+      messageType : 'turtlebro_web/WebTelemetry'
+    });
+
+    tele_listener.subscribe(function(message) {
+      console.log('Received message on ' + tele_listener.name + ': ' + message.odom_x);
+      $('#speed_x').text(message.odom_x.toFixed(2));
+      $('#speed_y').text(message.odom_y.toFixed(2));
+  });
 
 
 });
