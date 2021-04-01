@@ -31,7 +31,8 @@ KEYBOARDTELEOP.Teleop = function(options) {
   var throttle = options.throttle || 1.0;
 
   // used to externally throttle the speed (e.g., from a slider)
-  this.scale = 1.0;
+  this.scale_x = 0.5;
+  this.scale_z = 0.5;
 
   // linear x and y movement and angular z movement
   var x = 0;
@@ -53,28 +54,30 @@ KEYBOARDTELEOP.Teleop = function(options) {
     
     var pub = true;
 
-    var speed = 0;
+    var speed_x = 0;
+    var speed_z = 0;
     // throttle the speed by the slider and throttle constant
     if (keyDown === true) {
-      speed = throttle * that.scale;
+      speed_x = throttle * that.scale_x;
+      speed_z = throttle * that.scale_z;
     }
     // check which key was pressed
     switch (keyCode) {
       case 65:
         // turn left
-        z = 1.5 * speed;
+        z = 0.8 * speed_z;
         break;
       case 87:
         // up
-        x = 0.2 * speed;
+        x = 0.2 * speed_x;
         break;
       case 68:
         // turn right
-        z = -1.5 * speed;
+        z = -0.8 * speed_z;
         break;
       case 83:
         // down
-        x = -0.2 * speed;
+        x = -0.2 * speed_x;
         break;
       case 69:
         // strafe right

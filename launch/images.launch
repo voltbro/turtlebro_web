@@ -1,0 +1,3 @@
+<launch>
+  <node name="web_images_node" pkg="turtlebro_web" type="images.py" output="log" respawn="true" />
+</launch>

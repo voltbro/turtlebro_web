@@ -26,7 +26,9 @@ class ImagesServer(object):
         file_data = self.getImage()
 
         file_name = "images_%d.jpg" % int(time.time())
-        file = open('/var/www/html/images/'+file_name, 'w')
+        rospy.loginfo("Save file: %s", file_name)
+        # file = open('/var/www/html/images/'+file_name, 'w')
+        file = open('/opt/ros/melodic/share/turtlebro_web/web/static/images/'+file_name, 'w')
         file.write(file_data)
         file.close()
 

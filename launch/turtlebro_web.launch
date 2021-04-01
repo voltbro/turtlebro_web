@@ -7,5 +7,6 @@
     
     <include file="$(find turtlebro_web)/launch/webserver.launch"/>
     <include file="$(find turtlebro_web)/launch/telemetry.launch"/>
+    <include file="$(find turtlebro_web)/launch/images.launch"/>
 
 </launch>

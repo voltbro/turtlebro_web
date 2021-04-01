@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Base | Space rover control Voltbro</title>
+
+    <link href="./static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./static/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="./static/css/animate.css" rel="stylesheet">
+    <link href="./static/css/style.css" rel="stylesheet">
+
+</head>
+
+<body class="top-navigation">
+
+    <div id="wrapper">
+        <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom white-bg">
+        <nav class="navbar navbar-expand-lg navbar-static-top" role="navigation">
+
+                <a href="#" class="navbar-brand">Панель управления поисковой камерой</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-reorder"></i>
+                </button>
+
+            <div class="navbar-collapse collapse" id="navbar">
+                <ul class="nav navbar-nav mr-auto">
+                 
+                    <li class="dropdown">
+                        <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">Сервисы</a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li><a href="./">Управление движением</a></li>
+                            <li><a href="./payload">Управление полезной нагрузкой</a></li>
+                        </ul>
+                    </li>
+
+
+                </ul>
+               
+            </div>
+        </nav>
+        </div>
+        <div class="wrapper wrapper-content">
+            <div class="container">
+            <div class="row">
+                
+                <div class="col-md-3">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>Положение ровера</h5>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h1 class="no-margins"><span id="odom_x">#</span></h1>
+                                    <div class="font-bold text-success"><i class="fa fa-arrows"></i> <small>X</small></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h1 class="no-margins"><span id="odom_y">#</span></h1>
+                                    <div class="font-bold text-success"><i class="fa fa-arrows"></i> <small>Y</small></div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <div class="ibox-tools">
+                                <span class="label label-success float-right">градусы</span>
+                            </div>
+                            <h5>Угол поворота</h5>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="row" style="margin:0px 10px 0px 10px;">
+                                (-200 - 200 град)
+                                <div class="input-group" id="control_group1"><input type="text" class="form-control" value="0"> <span class="input-group-append"> <button type="button" id="control_btn1" class="btn btn-primary">Установить
+                                </button> </span></div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <div class="ibox-tools">
+                                <span class="label label-success float-right">градусы</span>
+                            </div>
+                            <h5>Угол наклона </h5>
+                        </div>
+                        <div class="ibox-content">
+
+                            <div class="row" style="margin:0px 10px 0px 10px;">
+                                (-90 - 90 град)
+                                <div class="input-group" id="control_group2"><input type="text" class="form-control" value="0"> <span class="input-group-append"> <button type="button" class="btn btn-primary"> Установить
+                                </button> </span></div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <div class="ibox-tools">
+                                <span class="label label-primary float-right">камера</span>
+                            </div>
+                            <h5>Управление</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div style="padding-top: 20px; text-align: center;" id="control_group3">
+                                <button type="button" class="btn btn-w-m btn-warning">Получить фотографию</button>
+                           </div>
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="ibox ">
+                                <div class="ibox-content">
+                                    <div>
+                                            
+                                        <h3 class="font-bold no-margins">
+                                             Камера полезной нагрузки
+                                        </h3>
+                                        <small>Ожидание команды</small>
+                                    </div>
+
+                                    <div class="m-t-sm">
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div>
+                                                <img id="camera_image" src="./static/img/cam2.jpg" style="width: 100%;"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="m-t-md">
+                                        
+                                        <small>
+                                            <strong>Внимание!:</strong> Дождись загрузки изображения перед сохранением.
+                                        </small>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>   
+                        
+                    
+                    
+                    </div>
+
+                </div>
+        
+            </div>
+
+        </div>
+        <div class="footer">
+            <div class="float-right">
+                <a href="http://voltbro.ru">voltbro ru</a>
+            </div>
+            <div>
+                <strong>Разработано</strong> Voltbro &copy; 2021
+            </div>
+        </div>
+
+        </div>
+        </div>
+
+
+
+    <!-- Mainly scripts -->
+    <script src="./static/js/jquery-3.1.1.min.js"></script>
+    <script src="./static/js/popper.min.js"></script>
+    <script src="./static/js/bootstrap.js"></script>
+    
+    <script src="./static/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="./static/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="./static/js/inspinia.js"></script>
+    <script src="./static/js/plugins/pace/pace.min.js"></script>
+    
+
+    <script src="./static/js/eventemitter2.min.js"></script>
+    <script src="./static/js/roslib.min.js"></script>
+    
+    <script>
+        $(document).ready(function(){
+        
+            // Connecting to ROS.
+            var ros = new ROSLIB.Ros({
+                url : 'ws://{{ ros_host }}:9090'
+            });
+
+            var tele_listener = new ROSLIB.Topic({
+                ros : ros,
+                name : '/web_tele',
+                messageType : 'turtlebro_web/WebTelemetry'
+             });
+
+             var servo_topic = new ROSLIB.Topic({
+                ros : ros,
+                name : '/servo44',
+                messageType : 'std_msgs/UInt16'
+            });
+
+            var motor_topic = new ROSLIB.Topic({
+                ros : ros,
+                name : '/motor1',
+                messageType : 'std_msgs/Int16'
+            });            
+    
+            tele_listener.subscribe(function(message) {
+                $('#odom_x').text(message.odom_x.toFixed(2));
+                $('#odom_y').text(message.odom_y.toFixed(2));
+            });
+
+            var image_service = new ROSLIB.Service({
+                ros : ros,
+                name : '/get_images',
+                serviceType : 'turtlebro_web/GetImage'
+            });
+
+            var image_request = new ROSLIB.ServiceRequest({request : true});
+
+            $("#control_group1 button" ).click(function() {
+                var that = this;            
+                $( that ).prop('disabled', true);
+
+                data = parseInt($("#control_group1 input").val())
+
+                if(Math.abs(data) <= 200){
+                    var motor_msg = new ROSLIB.Message({
+                        data: data
+                    });
+                    motor_topic.publish(motor_msg);
+                }
+
+                setTimeout(function() { 
+                    $( that ).prop('disabled', false);
+                }, 2000)
+
+            });
+
+            $("#control_group2 button" ).click(function() {
+                var that = this;            
+                $( that ).prop('disabled', true);
+
+                data = parseInt($("#control_group2 input").val())+90
+
+                if(data >= 0 && data <=180){
+                    var servo_msg = new ROSLIB.Message({
+                        data: data
+                    });
+                    servo_topic.publish(servo_msg);
+                }
+
+                setTimeout(function() { 
+                    $( that ).prop('disabled', false);
+                }, 2000)
+
+            });
+
+            $("#control_group3 button" ).click(function() {
+                var that = this; 
+                $( that ).prop('disabled', true);
+
+                image_service.callService(image_request, function(result) {
+                    // console.log(result.file_name);
+                    $("#camera_image").attr("src","./static/images/"+result.file_name);
+                });
+
+                setTimeout(function() { 
+                    $( that ).prop('disabled', false);
+                }, 5000)
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

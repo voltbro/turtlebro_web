@@ -39,6 +39,15 @@ def serve_index():
             ros_robot = os.uname()[1]
             )
 
+@app.route('/payload')
+def serve_payload():
+    ip_address = request.host.split(':')[0]
+    return render_template('payload.html', 
+            # ros_host = ros_host_params.hostname,
+            ros_host = ip_address,
+            ros_robot = os.uname()[1]
+            )            
+
 set_exit_handler(on_exit)
 rospy.loginfo('Start WebServer on {}:{}'.format(host, port))
 
