@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 
 import rospy
 
@@ -52,14 +52,14 @@ class Telemetry(object):
             tele.odom_y = self.odom.pose.pose.position.y
             tele.odom_z = self.odom.pose.pose.position.z
 
-            tele.imu_yaw = degrees(yaw)
-            tele.imu_pitch = degrees(pitch)
-            tele.imu_roll = degrees(roll)
+            tele.imu_yaw = int(degrees(yaw))
+            tele.imu_pitch = int(degrees(pitch))
+            tele.imu_roll = int(degrees(roll))
 
             tele.bat_voltage = self.bat.voltage
 
             tele.odom_lin_speed = self.odom.twist.twist.linear.x
-            tele.odom_ang_speed = degrees(self.odom.twist.twist.angular.z)
+            tele.odom_ang_speed = int(degrees(self.odom.twist.twist.angular.z))
 
             tele_pub.publish(tele)
 

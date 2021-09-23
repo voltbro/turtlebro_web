@@ -1,7 +1,8 @@
-#! /usr/bin/python
+#! /usr/bin/python3
+
 import rospy
 from rosgraph.rosenv import get_master_uri
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 import os,signal,sys
 from flask import Flask, send_from_directory, send_file, request, jsonify, render_template

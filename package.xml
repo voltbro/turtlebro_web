@@ -51,14 +51,14 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>rosbridge_server</build_depend>
   <build_depend>rospy</build_depend>
-  <build_depend>python</build_depend> 
-  <build_depend>python-flask</build_depend>
+  <build_depend>python3</build_depend> 
+  <build_depend>python3-flask</build_depend>
   <build_depend>message_generation</build_depend>
   <build_depend>message_runtime</build_depend>  
   
-  <build_export_depend>rosbridge_server</build_export_depend>
+  <!--build_export_depend>rosbridge_server</build_export_depend-->
   <build_export_depend>rospy</build_export_depend>
-  <exec_depend>rosbridge_suite</exec_depend>
+  <!--exec_depend>rosbridge_suite</exec_depend-->
   <exec_depend>rospy</exec_depend>
   <exec_depend>message_generation</exec_depend>
   <exec_depend>message_runtime</exec_depend>
