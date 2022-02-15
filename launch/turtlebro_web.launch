@@ -1,10 +1,10 @@
 <launch>
     <arg name="run_rosbridge_server" default="true"/>
-    <arg name="run_video_stream" default="true"/>
 
     <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" if="$(arg run_rosbridge_server)"/>
-    <include file="$(find turtlebro)/launch/camera_stream.launch" if="$(arg run_video_stream)"/>
-    <include file="$(find turtlebro_web)/launch/webserver.launch"/>
+   
+    <include file="$(find turtlebro_web)/launch/flask_server.launch"/>
+    <include file="$(find turtlebro_web)/launch/video_server.launch"/>    
     <include file="$(find turtlebro_web)/launch/telemetry.launch"/>
 
 </launch>

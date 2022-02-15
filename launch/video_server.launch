@@ -1,0 +1,8 @@
+<launch>
+    <node name="web_video_server" pkg="web_video_server" type="web_video_server" required="false" respawn="true" respawn_delay="5">
+        <param name="port" value="9999"/>
+        <param name="default_stream_type" value="ros_compressed"/>
+        <param name="default_transport" value="compressed" />
+        <param name="publish_rate" value="1.0"/>
+    </node>
+</launch>

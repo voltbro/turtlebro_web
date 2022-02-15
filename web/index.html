@@ -57,7 +57,14 @@
     <div class="row">
       <div class="col-8">
         <h3>Видео</h3>
-            <img src="http://{{ros_host}}:9999/?action=stream" width="640" height="480"/>
+        {% for video_topic in video_topics %}
+        <div class="pb-5"> 
+          <h5>Камера {{video_topic}}</h5>
+          <img src="http://{{ros_host}}:9999/stream?topic={{video_topic}}&type=ros_compressed" width="640" height="480"/>
+          <input name="del" type="button" value="Скрыть видео">
+        </div>
+        {% endfor %}
+
       </div>
       <div class="col-3">
         <h3>Параметры</h3>
@@ -85,6 +92,13 @@
 
 <script>
 $(document).ready(function(){
+
+    $("input[name='del']").each(function( index ) {
+      $(this).on("click", function(){
+        $(this).closest("div").find("img").attr("src","");
+        $(this).closest("div").remove();
+      })
+    });
 
     // Connecting to ROS.
     var ros = new ROSLIB.Ros({
