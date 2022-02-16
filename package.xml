@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>turtlebro_web</name>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <description>The turtlebro_web package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
@@ -55,6 +55,8 @@
   <build_depend>python3-flask</build_depend>
   <build_depend>message_generation</build_depend>
   <build_depend>message_runtime</build_depend>  
+  <build_depend>web_video_server</build_depend>  
+  
   
   <!--build_export_depend>rosbridge_server</build_export_depend-->
   <build_export_depend>rospy</build_export_depend>
