@@ -67,51 +67,46 @@
 
       </div>
       <div class="col-3">
-        <div class="row">
+
         <h3>Параметры</h3>
           <div>Координата X: <span id="speed_x">#</span> м</div> 
           <div>Координата Y: <span id="speed_y">#</span> м</div> 
           <div>Угол поворота: <span id="imu_yaw">#</span> град</div> 
           <div>Напряжение питания: <span id="bat_voltage">#</span> В.</div> 
-        </div>
 
-
-        <div class="row" style="margin-top:30px">
+        <div style="margin-top:30px">
           <h3>Управление камерой</h3>
+            <div class="clear">
+              <p>  
+                <input
+                style="width: 100%;"
+                id="horizontal_cam"
+                type="text"
+                data-provide="slider"
+                data-slider-min="-90"
+                data-slider-max="90"
+                data-slider-step="5"
+                data-slider-value="0">
+              </p>
 
+              <div style="margin-left: 46%;">
+                <input
+                id="vertical_cam"
+                type="text"
+                data-provide="slider"
+                data-slider-orientation="vertical"
+                data-slider-min="-45"
+                data-slider-max="45"
+                data-slider-step="5"
+                data-slider-value="0"
+                data-slider-reversed="1">
+              </div>
 
-        <div class="clear">
-        <p>  
-          <input
-          id="horizontal_cam"
-        type="text"
-        data-provide="slider"
-        data-slider-min="-90"
-        data-slider-max="90"
-        data-slider-step="5"
-        data-slider-value="0">
-        </p>
-
-        <div style="margin-left: 45%;">
-        <input
-        id="vertical_cam"
-        type="text"
-        data-provide="slider"
-        data-slider-orientation="vertical"
-        data-slider-min="-45"
-        data-slider-max="45"
-        data-slider-step="5"
-        data-slider-value="0"
-        data-slider-reversed="1">
+            </div>
         </div>
-
-    </div>
-
-    </div>
-
-      </div> 
     </div>
    
+    </div>
     </div>
 </main>
 
@@ -175,7 +170,12 @@ $(document).ready(function(){
       ros : ros,
       name : '/servo44',
       messageType : 'std_msgs/UInt16'
-    });      
+    });     
+    
+    var servo_pose = new ROSLIB.Message({
+          "data" : 90
+        });
+    servo44_topic.publish(servo_pose);          
 
     $('#horizontal_cam').slider({
         formatter: function(value) {
@@ -195,6 +195,11 @@ $(document).ready(function(){
       name : '/servo45',
       messageType : 'std_msgs/UInt16'
     });  
+
+    var servo_pose = new ROSLIB.Message({
+          "data" : 45
+        });
+    servo45_topic.publish(servo_pose);        
 
     $('#vertical_cam').slider({
         formatter: function(value) {
