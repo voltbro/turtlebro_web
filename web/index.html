@@ -67,12 +67,49 @@
 
       </div>
       <div class="col-3">
+        <div class="row">
         <h3>Параметры</h3>
           <div>Координата X: <span id="speed_x">#</span> м</div> 
           <div>Координата Y: <span id="speed_y">#</span> м</div> 
           <div>Угол поворота: <span id="imu_yaw">#</span> град</div> 
           <div>Напряжение питания: <span id="bat_voltage">#</span> В.</div> 
-      </div>    
+        </div>
+
+
+        <div class="row" style="margin-top:30px">
+          <h3>Управление камерой</h3>
+
+
+        <div class="clear">
+        <p>  
+          <input
+          id="horizontal_cam"
+        type="text"
+        data-provide="slider"
+        data-slider-min="-90"
+        data-slider-max="90"
+        data-slider-step="5"
+        data-slider-value="0">
+        </p>
+
+        <div style="margin-left: 45%;">
+        <input
+        id="vertical_cam"
+        type="text"
+        data-provide="slider"
+        data-slider-orientation="vertical"
+        data-slider-min="-45"
+        data-slider-max="45"
+        data-slider-step="5"
+        data-slider-value="0"
+        data-slider-reversed="1">
+        </div>
+
+    </div>
+
+    </div>
+
+      </div> 
     </div>
    
     </div>
@@ -116,7 +153,6 @@ $(document).ready(function(){
             return 'Скорость: ' + value + '%';
         },    
     }).on('change', function(slider){
-        // teleop.scale = (slider.value / 100.0)
         teleop.scale = (slider.value.newValue / 100.0)
     });
 
@@ -131,10 +167,48 @@ $(document).ready(function(){
       $('#speed_x').text(message.odom_x.toFixed(2));
       $('#speed_y').text(message.odom_y.toFixed(2));
       $('#imu_yaw').text(message.imu_yaw);
-      $('#bat_voltage').text(message.bat_voltage.toFixed(2));
+      $('#bat_voltage').text(message.bat_voltage.toFixed(2));  
 
+    });
 
-  });
+    var servo44_topic = new ROSLIB.Topic({
+      ros : ros,
+      name : '/servo44',
+      messageType : 'std_msgs/UInt16'
+    });      
+
+    $('#horizontal_cam').slider({
+        formatter: function(value) {
+            return 'Положение: ' + value + '';
+        },    
+    }).on('change', function(slider){
+        console.log(slider.value.newValue)
+
+        var servo_pose = new ROSLIB.Message({
+          "data" : 180 - (90 + slider.value.newValue)
+        });
+        servo44_topic.publish(servo_pose);
+    });      
+
+    var servo45_topic = new ROSLIB.Topic({
+      ros : ros,
+      name : '/servo45',
+      messageType : 'std_msgs/UInt16'
+    });  
+
+    $('#vertical_cam').slider({
+        formatter: function(value) {
+            return 'Положение: ' + value + '';
+        },    
+    }).on('change', function(slider){
+        console.log(slider.value.newValue)
+        var servo_pose = new ROSLIB.Message({
+          "data" : 45 + slider.value.newValue
+        });
+
+        servo45_topic.publish(servo_pose);
+    });         
+
 
 
 });
