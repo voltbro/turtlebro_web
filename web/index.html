@@ -223,9 +223,6 @@ $(document).ready(function(){
         servo45_topic.publish(servo_pose);
     });         
 
-
-    $('#bat_voltage').text(message.bat_voltage.toFixed(2));
-
     var restOdomClient = new ROSLIB.Service({
        ros : ros,
        name : '/reset',
