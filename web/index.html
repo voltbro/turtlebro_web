@@ -11,6 +11,7 @@
     <link href="./static/css/bootstrap/bootstrap.css" rel="stylesheet">
     <link href="./static/css/bootstrap/bootstrap-slider.min.css" rel="stylesheet">
     <link href="./static/css/sticky-footer-navbar.css" rel="stylesheet">
+    <link href="./static/css/styles.css" rel="stylesheet">    
   </head>
 
   <body class="d-flex flex-column h-100">
@@ -26,6 +27,9 @@
         <li class="nav-item active">
           <a class="nav-link" href="#">Управление <span class="sr-only">(current)</span></a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="http://{{ros_host}}:8090/?folder=/home/pi" target="_blank">VSCode</a>
+        </li>        
         <li class="nav-item">
           <a class="nav-link" href="http://manual.turtlebro.ru" target="_blank">Инструкция</a>
         </li>
@@ -61,7 +65,7 @@
         <div class="pb-5"> 
           <h5>Камера {{video_topic}}</h5>
           <img src="http://{{ros_host}}:9999/stream?topic={{video_topic}}&type=ros_compressed" width="640" height="480"/>
-          <input name="del" type="button" value="Скрыть видео">
+          <input name="del" type="button" class="btn btn-warning" value="Скрыть видео">
         </div>
         {% endfor %}
 
@@ -73,6 +77,10 @@
           <div>Координата Y: <span id="speed_y">#</span> м</div> 
           <div>Угол поворота: <span id="imu_yaw">#</span> град</div> 
           <div>Напряжение питания: <span id="bat_voltage">#</span> В.</div> 
+
+        <div class="resetodom">
+          <input type="button" class="btn btn-primary" value="Сбросить Одометрию">
+        </div>
 
         <div style="margin-top:30px">
           <h3>Управление камерой</h3>
@@ -104,6 +112,7 @@
 
             </div>
         </div>
+      </div>    
     </div>
    
     </div>
@@ -156,6 +165,7 @@ $(document).ready(function(){
       name : '/web_tele',
       messageType : 'turtlebro_web/WebTelemetry'
     });
+    
 
     tele_listener.subscribe(function(message) {
       // console.log('Received message on ' + tele_listener.name + ': ' + message.odom_x);
@@ -163,7 +173,6 @@ $(document).ready(function(){
       $('#speed_y').text(message.odom_y.toFixed(2));
       $('#imu_yaw').text(message.imu_yaw);
       $('#bat_voltage').text(message.bat_voltage.toFixed(2));  
-
     });
 
     var servo44_topic = new ROSLIB.Topic({
@@ -215,6 +224,24 @@ $(document).ready(function(){
     });         
 
 
+    $('#bat_voltage').text(message.bat_voltage.toFixed(2));
+
+    var restOdomClient = new ROSLIB.Service({
+       ros : ros,
+       name : '/reset',
+       serviceType : 'std_srvs/Empty'
+     });
+   
+     var request = new ROSLIB.ServiceRequest();
+
+    $(".resetodom > input").on("click", function(){
+      var that = $(this)
+      that.removeClass('btn-primary');that.addClass('btn-secondary');
+      restOdomClient.callService(request, function(){
+        that.removeClass('btn-secondary');that.addClass('btn-primary');
+        console.log("Reset Odom")     
+      });  
+    })
 
 });
 </script>
