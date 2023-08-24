@@ -37,6 +37,9 @@ KEYBOARDTELEOP.Teleop = function(options) {
   var x = 0;
   var y = 0;
   var z = 0;
+  var poliv_ud_pose = 140;  
+  var poliv_lr_pose = 90;  
+  var pump_state = 0;  
 
   var cmdVel = new ROSLIB.Topic({
     ros : ros,
@@ -44,13 +47,34 @@ KEYBOARDTELEOP.Teleop = function(options) {
     messageType : 'geometry_msgs/Twist'
   });
 
+  var poliv_ud_topic = new ROSLIB.Topic({
+    ros : ros,
+    name : "poliv_ud",
+    messageType : 'std_msgs/Int16'
+  });  
+
+  var poliv_lr_topic = new ROSLIB.Topic({
+    ros : ros,
+    name : "poliv_lr",
+    messageType : 'std_msgs/Int16'
+  });    
+
+  var pump_topic = new ROSLIB.Topic({
+    ros : ros,
+    name : "flush_pump",
+    messageType : 'std_msgs/Int16'
+  });    
+
+  poliv_lr_topic.publish(new ROSLIB.Message({data: poliv_lr_pose}));
+  poliv_ud_topic.publish(new ROSLIB.Message({data: poliv_ud_pose}));
+
   // sets up a key listener on the page used for keyboard teleoperation
   var handleKey = function(keyCode, keyDown) {
     // used to check for changes in speed
     var oldX = x;
     var oldY = y;
     var oldZ = z;
-    
+
     var pub = true;
 
     var speed = 0;
@@ -60,6 +84,36 @@ KEYBOARDTELEOP.Teleop = function(options) {
     }
     // check which key was pressed
     switch (keyCode) {
+
+      case 73://i controll up
+        if (poliv_ud_pose > 100) poliv_ud_pose -=1;
+        poliv_ud_topic.publish(new ROSLIB.Message({data: poliv_ud_pose}));
+        break;
+
+      case 75://k controll down
+        if (poliv_ud_pose < 155) poliv_ud_pose +=1;
+        poliv_ud_topic.publish(new ROSLIB.Message({data: poliv_ud_pose}));      
+
+        break;
+
+      case 76://l controll right
+        if (poliv_lr_pose > 40) poliv_lr_pose -=1;
+        poliv_lr_topic.publish(new ROSLIB.Message({data: poliv_lr_pose}));
+        break;
+
+      case 74://j controll left
+        if (poliv_lr_pose < 180) poliv_lr_pose +=1;
+        poliv_lr_topic.publish(new ROSLIB.Message({data: poliv_lr_pose}));      
+        break;
+
+      case 79://o pump off
+        pump_topic.publish(new ROSLIB.Message({data: 0}));    
+        break;  
+
+      case 80://o pump on
+        pump_topic.publish(new ROSLIB.Message({data: 1}));    
+        break;          
+                
       case 65:
         // turn left
         z = 0.9 * speed;
@@ -90,6 +144,7 @@ KEYBOARDTELEOP.Teleop = function(options) {
 
     // publish the command
     if (pub === true) {
+      
       var twist = new ROSLIB.Message({
         angular : {
           x : 0,
@@ -103,6 +158,8 @@ KEYBOARDTELEOP.Teleop = function(options) {
         }
       });
       cmdVel.publish(twist);
+
+
 
       // check for changes
       if (oldX !== x || oldY !== y || oldZ !== z) {
