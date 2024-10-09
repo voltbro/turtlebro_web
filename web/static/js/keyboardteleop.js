@@ -39,7 +39,7 @@ KEYBOARDTELEOP.Teleop = function(options) {
   var z = 0;
   var poliv_ud_pose = 140;  
   var poliv_lr_pose = 90;  
-  var pump_state = 0;  
+
 
   var cmdVel = new ROSLIB.Topic({
     ros : ros,
@@ -59,11 +59,6 @@ KEYBOARDTELEOP.Teleop = function(options) {
     messageType : 'std_msgs/Int16'
   });    
 
-  var pump_topic = new ROSLIB.Topic({
-    ros : ros,
-    name : "flush_pump",
-    messageType : 'std_msgs/Int16'
-  });    
 
   poliv_lr_topic.publish(new ROSLIB.Message({data: poliv_lr_pose}));
   poliv_ud_topic.publish(new ROSLIB.Message({data: poliv_ud_pose}));
@@ -105,15 +100,7 @@ KEYBOARDTELEOP.Teleop = function(options) {
         if (poliv_lr_pose < 180) poliv_lr_pose +=1;
         poliv_lr_topic.publish(new ROSLIB.Message({data: poliv_lr_pose}));      
         break;
-
-      case 79://o pump off
-        pump_topic.publish(new ROSLIB.Message({data: 0}));    
-        break;  
-
-      case 80://o pump on
-        pump_topic.publish(new ROSLIB.Message({data: 1}));    
-        break;          
-                
+                    
       case 65:
         // turn left
         z = 0.9 * speed;

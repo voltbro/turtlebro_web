@@ -59,7 +59,7 @@
 ></p>
 
     <div class="row">
-      <div class="col-8">
+      <div class="col-8" style="padding-bottom: 30px;">
         <h3>Видео</h3>
         {% for video_topic in video_topics %}
         <div class="pb-5"> 
@@ -69,10 +69,7 @@
         </div>
         {% endfor %}
 
-      </div>
-      <div class="col-3">
-
-        <h3>Параметры</h3>
+        <h3>Параметры ровера</h3>
           <div>Координата X: <span id="speed_x">#</span> м</div> 
           <div>Координата Y: <span id="speed_y">#</span> м</div> 
           <div>Угол поворота: <span id="imu_yaw">#</span> град</div> 
@@ -80,9 +77,12 @@
 
         <div class="resetodom">
           <input type="button" class="btn btn-primary" value="Сбросить Одометрию">
-        </div>
+        </div>        
 
-        <div style="margin-top:30px">
+      </div>
+      <div class="col-4">
+
+        <div style="margin-top:-30px">
           <h3>Управление камерой</h3>
             <div class="clear">
               <p>  
@@ -112,10 +112,17 @@
 
             </div>
         </div>
-        <div style="margin-top:30px">
+
+        <div style="margin-top:50px">
+          <h3>Управление насосом</h3>
+          <input id="pump_in" type="button" class="btn btn-primary" value="Наполнить бак">
+          <input id="pump_out" type="button" class="btn btn-primary" value="Полив">
+
+        </div>
+
+        <div style="margin-top:50px">
           <h3>Управление рукой</h3>
           Положение руки кнопки<mark> JIKL </mark><br>
-          <mark>O/P </mark>включить/выключить помпу
         </div>  
       </div>    
     </div>
@@ -213,7 +220,15 @@ $(document).ready(function(){
     var servo_pose = new ROSLIB.Message({
           "data" : 45
         });
-    servo45_topic.publish(servo_pose);        
+    servo45_topic.publish(servo_pose);   
+    
+    var pump_topic = new ROSLIB.Topic({
+      ros : ros,
+      name : '/flush_pump',
+      messageType : 'std_msgs/Int16'
+    });     
+    
+    pump_topic.publish(new ROSLIB.Message({"data" : 0}));   
 
     $('#vertical_cam').slider({
         formatter: function(value) {
@@ -244,6 +259,32 @@ $(document).ready(function(){
         console.log("Reset Odom")     
       });  
     })
+
+    $("#pump_in").on("mousedown", function(){
+      var that = $(this)
+      that.removeClass('btn-primary');that.addClass('btn-success');
+      pump_topic.publish(new ROSLIB.Message({"data" : 1}));  
+      console.log("pump_in_on")
+    })  
+    $("#pump_in").on("mouseup", function(){
+      var that = $(this)
+      that.removeClass('btn-success');that.addClass('btn-primary');
+      pump_topic.publish(new ROSLIB.Message({"data" : 0}));        
+      console.log("pump_in_off")
+    })      
+
+    $("#pump_out").on("mousedown", function(){
+      var that = $(this)
+      that.removeClass('btn-primary');that.addClass('btn-success');
+      pump_topic.publish(new ROSLIB.Message({"data" : 2}));  
+      console.log("pump_out_on")
+    })  
+    $("#pump_out").on("mouseup", function(){
+      var that = $(this)
+      that.removeClass('btn-success');that.addClass('btn-primary');
+      pump_topic.publish(new ROSLIB.Message({"data" : 0}));        
+      console.log("pump_out_off")
+    })      
 
 });
 </script>
