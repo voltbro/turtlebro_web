@@ -81,7 +81,7 @@ KEYBOARDTELEOP.Teleop = function(options) {
     switch (keyCode) {
 
       case 73://i controll up
-        if (poliv_ud_pose > 100) poliv_ud_pose -=1;
+        if (poliv_ud_pose > 60) poliv_ud_pose -=1;
         poliv_ud_topic.publish(new ROSLIB.Message({data: poliv_ud_pose}));
         break;
 
