@@ -33,7 +33,7 @@ int camera_ud_angle;
 int poliv_u_d_init = 140;
 int poliv_l_r_init = 90;
 
-int camera_u_d_init = 50;
+int camera_u_d_init = 60;
 int camera_l_r_init = 90;
 
 Servo Poliv_up_down;
