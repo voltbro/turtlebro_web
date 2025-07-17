@@ -59,19 +59,20 @@
 ></p>
 
     <div class="row">
-      <div class="col-8">
+      <div class="col-12">
         <h3>Видео</h3>
         {% for video_topic in video_topics %}
-        <div class="pb-5"> 
+        <div class="pb-12"> 
           <h5>Камера {{video_topic}}</h5>
-          <img src="http://{{ros_host}}:9999/stream?topic={{video_topic}}&type=ros_compressed" width="640" height="480"/>
-          <input name="del" type="button" class="btn btn-warning" value="Скрыть видео">
+          <img src="http://{{ros_host}}:9999/stream?topic={{video_topic}}&type=ros_compressed" width="1024" height="768"/>
         </div>
         {% endfor %}
 
       </div>
+    </div>
+    <div class="row">
       <div class="col-3">
-        <h3>Параметры</h3>
+        <h3>Ровер</h3>
           <div>Координата X: <span id="speed_x">#</span> м</div> 
           <div>Координата Y: <span id="speed_y">#</span> м</div> 
           <div>Угол поворота: <span id="imu_yaw">#</span> град</div> 
@@ -80,6 +81,12 @@
             <input type="button" class="btn btn-primary" value="Сбросить Одометрию">
           </div>
       </div>    
+      <div class="col-3">
+        <h3>WiFi</h3>
+          <div>Bit Rate: <span id="bit_rate">#</span> Mb/s</div> 
+          <div>Link Quality : <span id="link_quality">#</span>/100</div> 
+          <div>Signal level: <span id="signal_level">#</span> /100</div> 
+      </div>        
     </div>
    
     </div>
@@ -132,6 +139,12 @@ $(document).ready(function(){
       name : '/web_tele',
       messageType : 'turtlebro_web/WebTelemetry'
     });
+
+    var wifi_listener = new ROSLIB.Topic({
+      ros : ros,
+      name : '/wifi_signal',
+      messageType : 'turtlebro/WiFi'
+    });    
     
 
     tele_listener.subscribe(function(message) {
@@ -141,6 +154,12 @@ $(document).ready(function(){
       $('#imu_yaw').text(message.imu_yaw);
       $('#bat_voltage').text(message.bat_voltage.toFixed(2));
     });
+
+    wifi_listener.subscribe(function(message) {
+      $('#bit_rate').text(message.bit_rate);
+      $('#link_quality').text(message.link_quality);
+      $('#signal_level').text(message.signal_level);
+    });    
 
     var restOdomClient = new ROSLIB.Service({
        ros : ros,
