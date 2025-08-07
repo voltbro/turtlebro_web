@@ -114,16 +114,13 @@
         </div>
 
         <div style="margin-top:50px">
-          <h3>Управление насосом</h3>
-          <input id="pump_in" type="button" class="btn btn-primary" value="Наполнить бак">
-          <input id="pump_out" type="button" class="btn btn-primary" value="Полив">
+          <h3>Управление захватом</h3>
+          <input id="pump_in" type="button" class="btn btn-primary" value="Поднять захват">
+          <input id="pump_out" type="button" class="btn btn-primary" value="Опустить захват">
 
         </div>
 
-        <div style="margin-top:50px">
-          <h3>Управление рукой</h3>
-          Положение руки кнопки<mark> JIKL </mark><br>
-        </div>  
+
       </div>    
     </div>
    
@@ -218,7 +215,7 @@ $(document).ready(function(){
     });  
 
     var servo_pose = new ROSLIB.Message({
-          "data" : 45
+          "data" : 60
         });
     servo45_topic.publish(servo_pose);   
     
