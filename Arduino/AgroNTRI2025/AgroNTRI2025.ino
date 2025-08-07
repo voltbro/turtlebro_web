@@ -27,59 +27,35 @@ ros::NodeHandle_<NewHardware> nh;
 //Servos and pins init
 
 int poliv_ud_angle;
-int poliv_lr_angle;
 int camera_ud_angle;
 
-int poliv_u_d_init = 140;
-int poliv_l_r_init = 90;
+int poliv_u_d_init = 10;
 
 int camera_u_d_init = 60;
 int camera_l_r_init = 90;
 
 Servo Poliv_up_down;
-Servo Poliv_left_right;
 
 Servo Camera_up_down;
 Servo Camera_left_right;
 
-//Pump
-#define IN3 6  //pwm
-#define IN4 13
-
 void flushMotor(int m2) { 
-
-  if (m2 == 0) {
-    digitalWrite(IN3, 0);
-    digitalWrite(IN4, 0);
-
-  } else if (m2 == 1) {
-    digitalWrite(IN3, 0);
-    digitalWrite(IN4, 1);
+  if (m2 == 1) {
+    // Увеличиваем значение, но не более 150
+    if (poliv_ud_angle < 150) {
+      poliv_ud_angle++;
+    }
+    poliv_ud_angle = min(poliv_ud_angle, 150);
   } else if (m2 == 2) {
-    digitalWrite(IN3, 1);
-    digitalWrite(IN4, 0);
+    // Уменьшаем значение, но не менее 10
+    if (poliv_ud_angle > 10) {
+      poliv_ud_angle--;
+    }
+    poliv_ud_angle = max(poliv_ud_angle, 10);
   }
-}
-
-//RoverPN ROS topic read function
-
-void CbPolivUD(const std_msgs::Int16& angle) {
-  poliv_ud_angle = angle.data;
-  if (poliv_ud_angle > 155) {
-    poliv_ud_angle = 155;
-  }
-  if (poliv_ud_angle < 50) {
-    poliv_ud_angle = 50;
-  }
+  // Публикуем данные
   Poliv_up_down.write(poliv_ud_angle);
 }
-ros::Subscriber<std_msgs::Int16> subPolivUD("poliv_ud", &CbPolivUD);
-
-
-void CbPolivLR(const std_msgs::Int16& angle) {
-  Poliv_left_right.write(angle.data);
-}
-ros::Subscriber<std_msgs::Int16> subPolivLR("poliv_lr", &CbPolivLR);
 
 
 void CbCameraUD(const std_msgs::Int16& angle) {
@@ -102,8 +78,6 @@ ros::Subscriber<std_msgs::Int16> subFlushPump("flush_pump", &CbFlushPump);
 void setup() {
   //ROS nodes init
   nh.initNode();
-  nh.subscribe(subPolivUD);
-  nh.subscribe(subPolivLR);
 
   nh.subscribe(subCameraUD);
   nh.subscribe(subCameraLR);
@@ -113,18 +87,14 @@ void setup() {
   // Rotate to initial servos angles
   Poliv_up_down.attach(44);
   Poliv_up_down.write(poliv_u_d_init);
-  Poliv_left_right.attach(45);
-  Poliv_left_right.write(poliv_l_r_init);
 
-  Camera_up_down.attach(9);
+
+  Camera_up_down.attach(1);
   Camera_up_down.write(camera_u_d_init);
-  Camera_left_right.attach(10);
+  Camera_left_right.attach(3);
   Camera_left_right.write(camera_l_r_init);
 
   // Water pump inits
-
-  pinMode(IN3, OUTPUT);
-  pinMode(IN4, OUTPUT);
 }
 
 void loop() {
